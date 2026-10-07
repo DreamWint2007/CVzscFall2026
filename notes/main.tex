@@ -1,0 +1,220 @@
+%==============================================================================
+%  Computer Vision --- Lecture Notes
+%
+%  Root file.  Chapters live in chapters/, figures in figures/.
+%
+%  Build from the command line:
+%      latexmk -pdf -outdir=out main.tex
+%  Delete the auxiliary files again:
+%      latexmk -c -outdir=out main.tex
+%
+%  In VS Code the LaTeX Workshop recipes are configured in
+%  .vscode/settings.json ("latexmk (pdfLaTeX)", "latexmk (XeLaTeX)",
+%  "latexmk (LuaLaTeX)"); Ctrl+Alt+B builds, Ctrl+Alt+V opens the PDF.
+%==============================================================================
+
+\documentclass[11pt,a4paper]{report}
+
+%------------------------------------------------------------------------------
+%  Encoding and fonts
+%  fontenc/inputenc are only needed by pdfLaTeX; XeLaTeX and LuaLaTeX work
+%  with Unicode input directly.  lmodern is loaded for every engine so that
+%  Type 1 Latin Modern is used instead of METAFONT bitmap fonts.
+%------------------------------------------------------------------------------
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}   % default since TeX Live 2018; kept for portability
+\fi
+\usepackage{lmodern}
+\usepackage{textcomp}
+
+%------------------------------------------------------------------------------
+%  Language, page layout, typography
+%------------------------------------------------------------------------------
+\usepackage[english]{babel}
+\usepackage{csquotes}
+\usepackage[a4paper,margin=2.5cm,footskip=1.2cm]{geometry}
+\usepackage{microtype}
+\usepackage{enumitem}
+
+%------------------------------------------------------------------------------
+%  Mathematics
+%------------------------------------------------------------------------------
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{siunitx}
+\sisetup{exponent-product=\cdot, per-mode=symbol}
+\numberwithin{equation}{chapter}
+
+%------------------------------------------------------------------------------
+%  Figures, tables and colours
+%------------------------------------------------------------------------------
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{float}
+\usepackage{xcolor}
+\definecolor{cvblue}{RGB}{0,90,160}
+\definecolor{cvred}{RGB}{170,30,30}
+\definecolor{cvgreen}{RGB}{20,120,60}
+\definecolor{cvgray}{RGB}{100,100,100}
+
+%------------------------------------------------------------------------------
+%  Diagrams and plots
+%------------------------------------------------------------------------------
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,positioning,fit,backgrounds,patterns,shapes.geometric}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+%------------------------------------------------------------------------------
+%  Algorithms and code listings
+%------------------------------------------------------------------------------
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\usepackage{upquote}
+\usepackage{listings}
+\lstdefinestyle{cvcode}{
+  language=Python,
+  basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{cvblue}\bfseries,
+  commentstyle=\color{cvgreen}\itshape,
+  stringstyle=\color{cvred},
+  numberstyle=\tiny\color{cvgray},
+  numbers=left,
+  numbersep=8pt,
+  frame=single,
+  rulecolor=\color{cvgray},
+  framesep=5pt,
+  breaklines=true,
+  showstringspaces=false,
+  tabsize=4,
+  upquote=true,
+  captionpos=b
+}
+\lstset{style=cvcode}
+
+%------------------------------------------------------------------------------
+%  Theorem-like environments (numbered within chapters)
+%------------------------------------------------------------------------------
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{example}[theorem]{Example}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+%------------------------------------------------------------------------------
+%  Hyperlinks and cross-references
+%  (load hyperref late; cleveref must come after hyperref)
+%------------------------------------------------------------------------------
+\usepackage[
+  colorlinks=true,
+  linkcolor=cvblue,
+  citecolor=cvgreen,
+  urlcolor=cvred,
+  linktoc=all,
+  bookmarksnumbered=true,
+  pdftitle={Computer Vision --- Lecture Notes},
+  pdfsubject={Computer Vision},
+  pdfkeywords={computer vision, image processing, image statistics}
+]{hyperref}
+\usepackage[capitalise,noabbrev]{cleveref}
+
+%------------------------------------------------------------------------------
+%  Bibliography
+%  (uncomment these lines and \printbibliography at the end of the document
+%   once references.bib exists)
+%------------------------------------------------------------------------------
+% \usepackage[backend=biber,style=numeric-comp,sorting=nyt]{biblatex}
+% \addbibresource{references.bib}
+
+%------------------------------------------------------------------------------
+%  Notation shortcuts
+%------------------------------------------------------------------------------
+% Sets, probability and expectation
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Prob}{\mathbb{P}}
+
+% Operators
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\sinc}{sinc}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+% Delimiters
+\newcommand{\abs}[1]{\left\lvert #1 \right\rvert}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\inner}[2]{\left\langle #1, #2 \right\rangle}
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+
+% Matrices, vectors and calculus
+\newcommand{\mat}[1]{\bm{#1}}
+\newcommand{\transpose}{^{\mathsf{T}}}
+\newcommand{\inv}{^{-1}}
+\newcommand{\diff}{\mathop{}\!\mathrm{d}}
+\newcommand{\pdv}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\grad}{\nabla}
+\newcommand{\conv}{\ast}
+\newcommand{\Fourier}{\mathcal{F}}
+
+%------------------------------------------------------------------------------
+%  Document metadata
+%------------------------------------------------------------------------------
+\title{%
+  \textbf{\huge Computer Vision}\\[0.75em]
+  \large Lecture Notes
+}
+\author{Compiled by \textit{Your Name}}
+\date{Last updated: \today}
+
+\begin{document}
+
+%------------------------------------------------------------------------------
+%  Front matter: title page and table of contents, numbered i, ii, ...
+%------------------------------------------------------------------------------
+\pagenumbering{roman}
+\maketitle
+\setcounter{page}{2}   % the title page counts as page i
+\tableofcontents
+% \listoffigures
+% \listoftables
+
+%------------------------------------------------------------------------------
+%  Main matter: chapters, numbered 1, 2, ...
+%------------------------------------------------------------------------------
+\clearpage
+\pagenumbering{arabic}
+
+%==============================================================================
+%  Chapters: one \input per file in chapters/
+%==============================================================================
+\input{chapters/Natural_Image_Statistics}
+
+%==============================================================================
+%  Back matter (uncomment when needed)
+%==============================================================================
+% \appendix
+% \input{appendices/notation}
+% \printbibliography[heading=bibintoc]
+
+\end{document}

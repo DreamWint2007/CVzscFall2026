@@ -1,1 +1,77 @@
-\subsection{Basic Concepts about an Image}
+\subsection{图像中的像素}
+像素和周围的像素往往有联系,这使得自然图像呈现一定的统计特征.我们先来定义一些概念.
+\begin{definition}[像素网格]
+    一个图像的像素网格是一个二维的离散网格,它定义了图像中像素的位置.表示为:
+    \begin{equation}
+        \Lambda = [m] \times [n] = \{(i, j) | i \in [m], j \in [n]\}
+    \end{equation}
+\end{definition}
+我们考虑灰度图,每个点的像素值可以用k位二进制数表示.
+\begin{definition}[像素值集合]
+    像素值集合是一个离散的集合,它定义了图像中像素值的范围.表示为:
+    \begin{equation}
+        V = [0, 2^k - 1] = \{0, 1, 2, \ldots, 2^k - 1\}
+    \end{equation}
+\end{definition}
+\begin{definition}[像素值函数]
+    像素值函数是一个将像素网格中的每个像素映射到像素值集合中的一个值的函数.表示为:
+    \begin{equation}
+        f: \Lambda \to V
+    \end{equation}
+    $f(i, j)$表示像素网格中位置为$(i, j)$的像素的像素值.
+\end{definition}
+\begin{definition}[图像空间]
+    图像空间是所有可能的图像的集合，这些图像可以通过像素值函数形成。我们将其表示为:
+    \begin{equation}
+        \mathcal{I} = \{f | f: \Lambda \to V\}
+    \end{equation}
+\end{definition}
+显然图像空间的基数(大小)就是 $|\mathcal{I}| = 2^{k|\Lambda|} = 2^{kmn}$.
+\subsection{Entropy and Compressibility}
+我们可以定义一个概率分布 $f(I)$ 在空间 $\mathcal{I}$ 上. 它的熵为
+\begin{equation}
+    H(f) = -\sum_{I \in \mathcal{I}} f(I) \log_2 f(I)
+\end{equation}
+从另一个角度来看,$H(f)$ 是从分布 $f$ 中编码一张图像所需的平均bit数的理论上限。熵越低,图像就越容易压缩。在实践中，我们可以通过从分布 $f$ 中采样大量图像并计算经验熵来估计熵。
+我们假设自然图像集 $\Omega \subset \mathcal{I}$ 有有效基数，我们可以估计它为
+\begin{equation}
+    |\Omega|_{\text{eff}} = 2^{H(f)}
+\end{equation}
+\begin{notes}[均匀分布的熵]
+    如果 $f(I)$ 是均匀分布,那么我们有:
+    \begin{equation}
+        f(I) = \begin{cases}
+            \frac{1}{|\Omega|}, & I \in \Omega \\
+            0, & I \notin \Omega
+        \end{cases}
+    \end{equation}
+    所以熵为:
+    \begin{equation}
+        H(f) = -\sum_{I \in \Omega} \frac{1}{|\Omega|} \log_2 \frac{1}{|\Omega|} = \log_2 |\Omega|
+    \end{equation}
+    这和我们之前对 $|\Omega|$的估计一致.
+\end{notes}
+我们希望可以比较不同图像分布的熵,但是直接使用这个熵有一个问题,它依赖于图像的大小,更大的图像往往意味着更高的熵,这是不公平的.我们可以定义熵率:
+\begin{definition}[Entropy Rate]
+    $L_f$ 是分布 $f$ 平均每个像素的熵:
+    \begin{equation}
+        L_f = \frac{H(f)}{|\Lambda|}
+    \end{equation}
+\end{definition}
+如果 $f$ 是均匀分布,我们有 $L_f = \frac{\log_2 |\Omega|}{|\Lambda|}$. 自然图像集$\Omega$ 的有效基数可以这样估计:
+\begin{equation}
+    |\Omega|_{\text{eff}} = 2^{L_f |\Lambda|}
+\end{equation}
+显然,随机噪声的熵率是 $L_0 = k$, 这也是熵率的上限. x
+我们可以定义 $f$ 的冗余度为:
+\begin{definition}[冗余度]
+    $\alpha_f$ 是图像分布 $f$ 的冗余度,它表示自然图像集的熵率与随机噪声的熵率之间的差异.定义为:
+    \begin{equation}
+        \alpha_f = 1 - \frac{L_f}{L_0} = 1 - \frac{L_f}{k}
+    \end{equation}
+\end{definition}
+接下来我们从几个Observation来看自然图像的统计特征.
+\subsection{Observation 1: 自然图像的可压缩性}
+$k=8$时,自然图像的冗余度 $\alpha_f$ 通常在3左右,所以自然图像往往可以压缩.
+\subsection{Observation 2: 1/f 幂律}
+\subsection{Observation 3: }

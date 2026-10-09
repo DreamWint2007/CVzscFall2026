@@ -1,0 +1,146 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb}
+\begin{document}
+\title{CV HW 1}
+\maketitle
+\section{Question 1}
+(1) Calculate $F(\nabla_x \mathbf{I})$ as an example and $F(\nabla_y \mathbf{I})$ can be similarly solved. \\
+\begin{equation*}
+    F(\nabla_x \mathbf{I}) = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} \frac{\partial \mathbf{I}(x, y)}{\partial x} e^{-2\pi i (\xi x + \eta y)} \mathrm{d}x\mathrm{d}y
+\end{equation*}
+Let $u(x) = \mathbf{I}(x, y), v(x) = e^{-2\pi i (\xi x + \eta y)}$, then we have
+\begin{align*}
+    F(\nabla_x \mathbf{I})
+    &= \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} u'(x) v(x) \mathrm{d}x\mathrm{d}y \\
+    &= [u(x)v(x)] \Big|_{-\infty}^{\infty} - \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} u(x) v'(x) \mathrm{d}x\mathrm{d}y \\
+\end{align*}
+We assert that $[u(x)v(x)] \Big|_{-\infty}^{\infty} = 0$ . Then we have
+\begin{align*}
+    F(\nabla_x \mathbf{I})
+    &= -\int_{-\infty}^{\infty} \int_{-\infty}^{\infty} \mathbf{I}(x, y) \cdot (-2\pi i \xi) e^{-2\pi i (\xi x + \eta y)} \mathrm{d}x \mathrm{d}y \\
+    &= 2\pi i \xi F(\mathbf{I})
+\end{align*}
+(2) 
+\begin{align*}
+    \int_{-\infty}^{\infty} G^*(\xi) G(\xi) \mathrm{d}\xi 
+    &= \int_{-\infty}^{\infty} G(\xi) \int_{-\infty}^{\infty} g^*(t) e^{2\pi i \xi t} \mathrm{d}t \mathrm{d}\xi \\
+    &= \int_{-\infty}^{\infty} g^*(t) \int_{-\infty}^{\infty} G(\xi) e^{2\pi i \xi t} \mathrm{d}\xi \mathrm{d}t \\
+    &= \int_{-\infty}^{\infty} g^*(t) g(t) \mathrm{d}t \\
+    &= \int_{-\infty}^{\infty} g(t)^2 \mathrm{d}t
+\end{align*}
+(3)
+\begin{align*}
+    \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} (\nabla_x \mathbf{I}(x, y))^2 \mathrm{d}x\mathrm{d}y
+    &= \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} |2\pi i \xi F(\mathbf{I})|^2 \mathrm{d}\xi \mathrm{d}\eta \\
+    &= 4\pi^2 \xi^2 \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} |F(\mathbf{I})|^2 \mathrm{d}\xi \mathrm{d}\eta
+\end{align*}
+Similarly for $\nabla_y \mathbf{I}$, we have
+\begin{equation*}
+    H(\mathbf{I}) = \beta \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} [(\nabla_x \mathbf{I}(x, y))^2 + (\nabla_y \mathbf{I}(x, y))^2] \mathrm{d}x\mathrm{d}y = 4\pi^2 \beta \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} (\xi^2 + \eta^2) |\hat{I}(\xi, \eta)|^2 \mathrm{d}\xi \mathrm{d}\eta
+\end{equation*}
+(4)
+\begin{equation*}
+    E = \int_{f}^{2f} A^2 2\pi f \mathrm{d}f = \int_{f}^{2f} \frac{C}{f^2} 2\pi f \mathrm{d}f = 2\pi C \ln 2
+\end{equation*}
+So the power between $f$ and $2f$ is a constant.
+
+\section{Question 2}
+(1) Let $L(\mathbf{I}, \nabla_x \mathbf{I}, \nabla_y \mathbf{I}) = (\nabla_x \mathbf{I})^2 + (\nabla_y \mathbf{I})^2$, then $H(\mathbf{I}, \nabla_x \mathbf{I}, \nabla_y \mathbf{I}) = \iint_{\mathbb{R}^2} L\mathrm{d}x\mathrm{d}y$.
+\begin{align*}
+    \frac{\delta H}{\delta \mathbf{I}} 
+    &= \frac{\partial L}{\partial \mathbf{I}} - \frac{\partial}{\partial x} \frac{\partial L}{\partial (\nabla_x \mathbf{I})} - \frac{\partial}{\partial y} \frac{\partial L}{\partial (\nabla_y \mathbf{I})} \\
+    &= - \frac{\partial}{\partial x} 2\nabla_x \mathbf{I} - \frac{\partial}{\partial y} 2\nabla_y \mathbf{I} \\
+    &= -2 \Delta \mathbf{I}
+\end{align*}
+So we have
+\begin{equation*}
+    \frac{\mathrm{d} \mathbf{I}}{\mathrm{d} t} = 2 \Delta \mathbf{I}
+\end{equation*}
+(2)
+\begin{equation*}
+    H(\mathbf{I}) = \sum_{x \in [m - 1]} \sum_{y \in [n - 1]} [(\mathbf{I}(x + 1, y) - \mathbf{I}(x, y))^2 + (\mathbf{I}(x, y + 1) - \mathbf{I}(x, y))^2] 
+\end{equation*}
+\begin{equation*}
+    \frac{\partial H}{\partial \mathbf{I}}(x, y) = 2(\mathbf{I}(x, y) - \mathbf{I}(x - 1, y)) + 2(\mathbf{I}(x, y) - \mathbf{I}(x, y - 1)) + 2(\mathbf{I}(x, y) - \mathbf{I}(x + 1, y)) + 2(\mathbf{I}(x, y) - \mathbf{I}(x, y + 1))
+\end{equation*}
+\begin{equation*}
+    \frac{\mathrm{d} \mathbf{I}}{\mathrm{d} t}(x, y) = 2(\mathbf{I}(x - 1, y) + \mathbf{I}(x, y - 1) + \mathbf{I}(x + 1, y) + \mathbf{I}(x, y + 1) - 4\mathbf{I}(x, y))
+\end{equation*}
+(3) We notice that in the periodic boundary condition, we have
+\begin{equation*}
+    \sum_{x \in [m - 1]} \sum_{y \in [n - 1]} \frac{\mathrm{d} \mathbf{I}}{\mathrm{d} t}(x, y) = 0
+\end{equation*}
+and $H(\mathbf{I})$ always decreases, so $t \rightarrow \infty$ implies $H(\mathbf{I}) \rightarrow 0$, so $\nabla \mathbf{I} \rightarrow 0$, which means all pixels come to the same.
+\begin{equation*}
+    \mathbf{I}(x, y)_{t \rightarrow \infty} = \frac{1}{mn} \sum_{x \in [m - 1]} \sum_{y \in [n - 1]} \mathbf{I}(x, y)_{t = 0}
+\end{equation*}
+
+\section{Question 3}
+(1)
+\begin{equation*}
+    \lambda(a, b, A) = A \int_a^b p(r)\mathrm{d}r
+\end{equation*}
+When the image is scaled by $s$, we have
+\begin{equation*}
+    p'(sr) = \frac{1}{s^3} p(r)
+\end{equation*}
+So we have
+\begin{equation*}
+    \lambda(2a, 2b, A) = A \int_{2a}^{2b} p'(r)\mathrm{d}r = A \int_{2a}^{2b} \frac{1}{8} p(\frac{r}{2})\mathrm{d}r = \frac{A}{4} \int_a^b p(r)\mathrm{d}r = \frac{1}{4} \lambda(a, b, A)
+\end{equation*}
+(2)
+\begin{equation*}
+    \int_{sa}^{sb} p(r)\mathrm{d}r = \int_{sa}^{sb} \frac{1}{s^3} p(\frac{r}{s})\mathrm{d}r = \frac{1}{s^2} \int_a^b p(r)\mathrm{d}r
+\end{equation*}
+(3) As revealed in (1)
+\begin{equation*}
+    p'(sr) = \frac{1}{s^3} p(r)
+\end{equation*}
+
+\section{Question 4}
+(1)
+\begin{equation*}
+    \frac{\partial L}{\partial r} - \frac{\mathrm{d}}{\mathrm{d}t} \frac{\partial L}{\partial v} = -\frac{\mathrm{d}}{\mathrm{d}t} (mv) = 0
+\end{equation*}
+\begin{equation*}
+    v = \text{const}
+\end{equation*}
+(2)
+\begin{equation*}
+    L = T - V = \frac{1}{2}mv^2 - V(r)
+\end{equation*}
+\begin{equation*}
+    \frac{\partial L}{\partial r} = -\frac{\partial V}{\partial r} = F
+\end{equation*}
+\begin{equation*}
+    \frac{\mathrm{d}}{\mathrm{d}t} \frac{\partial L}{\partial v} = \frac{\mathrm{d}}{\mathrm{d}t} (mv) = m \frac{\mathrm{d}^2 r}{\mathrm{d} t^2}
+\end{equation*}
+so
+\begin{equation*}
+    F = m \frac{\mathrm{d}^2 r}{\mathrm{d} t^2}
+\end{equation*}
+(3)
+\begin{equation*}
+    \sum_{i = 1}^{n} \frac{\partial L}{\partial r_i} - \frac{\mathrm{d}}{\mathrm{d}t} \frac{\partial L}{\partial v_i} = \sum_{i = 1}^{n} \frac{\partial L}{\partial r_i} - \frac{\mathrm{d}}{\mathrm{d}t} \sum_{i = 1}^{n} \frac{\partial L}{\partial v_i} = 0
+\end{equation*}
+\begin{equation*}
+    \frac{\mathrm{d}}{\mathrm{d}t} \sum_{i = 1}^{n} \frac{\partial L}{\partial v_i} = 0
+\end{equation*}
+\begin{equation*}
+    \sum_{i = 1}^{n} p_i = \text{const}
+\end{equation*}
+(4)
+\begin{align*}
+    \frac{\mathrm{d}L}{\mathrm{d}t} 
+    &= \frac{\partial L}{\partial r} \frac{\mathrm{d}r}{\mathrm{d}t} + \frac{\partial L}{\partial v} \frac{\mathrm{d}v}{\mathrm{d}t} \\
+    &= \frac{\mathrm{d}}{\mathrm{d}t} \frac{\partial L}{\partial v} \frac{\mathrm{d}r}{\mathrm{d}t} + \frac{\partial L}{\partial v} \frac{\mathrm{d}v}{\mathrm{d}t} \\
+    &= \frac{\mathrm{d}}{\mathrm{d}t} (\frac{\partial L}{\partial v} v)
+\end{align*}
+So we have
+\begin{equation*}
+    \frac{\mathrm{d}}{\mathrm{d}t} (\frac{\partial L}{\partial v} v - L) = \frac{\mathrm{d}}{\mathrm{d}t} (\frac{1}{2}mv^2 + V(r)) = 0
+\end{equation*}
+\begin{equation*}
+    E = \frac{1}{2}mv^2 + V(r) = \text{const}
+\end{equation*}
+\end{document}

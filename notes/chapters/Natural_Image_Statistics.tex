@@ -73,5 +73,35 @@
 接下来我们从几个Observation来看自然图像的统计特征.
 \subsection{Observation 1: 自然图像的可压缩性}
 $k=8$时,自然图像的冗余度 $\alpha_f$ 通常在3左右,所以自然图像往往可以压缩.
+我们考虑一个图像$I$中的像素$p_1, p_2, \ldots, p_{|I|} \in I$.我们可以写出整个图像的联合熵并展开:
+\begin{equation}
+    H(p_1, p_2, \ldots, p_{|I|}) = H(p_1) + H(p_2 | p_1) + H(p_3 | p_1, p_2) + \ldots + H(p_{|I|} | p_1, p_2, \ldots, p_{|I|-1})
+\end{equation}
+如果像素之间相互独立,那么应该有$H(p_i | p_1, p_2, \ldots, p_{i-1}) = H(p_i)$, 或者等价地,
+\begin{equation}
+    H(p_1, p_2, \ldots, p_{|I|}) = H(p_1) + H(p_2) + H(p_3) + \ldots + H(p_{|I|})
+\end{equation}
+但自然图像中像素之间是有联系的,所以有
+\begin{equation}
+    H(p_1, p_2, \ldots, p_{|I|}) < H(p_1) + H(p_2) + H(p_3) + \ldots + H(p_{|I|})
+\end{equation}
+此外,由于直接估计高维联合分布的熵是很困难的,我们可以考虑用条件熵来近似.
+\begin{equation}
+    H(p_i | p_{\partial i}) = \mathbb{E}_{p_{\partial i}}[H(p_i | p_{\partial i} = x)] 
+\end{equation}
 \subsection{Observation 2: 1/f 幂律}
+对自然图像进行二维Fourier变换,我们可以得到图像的频谱.
+\begin{equation}
+    G(\omega_x, \omega_y) = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} f(x, y) e^{-2\pi i (\omega_x x+\omega_y y)} \,\mathrm{d}x\mathrm{d}y
+\end{equation}
+其中$\omega_x, \omega_y$分别是$x, y$方向上的频率.在实际计算中,我们采用其离散形式:
+\begin{equation}
+    G(\omega_x, \omega_y) = \sum_{x=0}^{m-1} \sum_{y=0}^{n-1} f(x, y) e^{-2\pi i (\omega_x \frac{x}{m}+\omega_y \frac{y}{n})}
+\end{equation}
+我们定义频率的模为 $\omega = \sqrt{\omega_x^2 + \omega_y^2}$, 将模为0的点移动到中心,我们可以得到同心圆形的频谱图.
+统计发现,自然图像的频谱图满足$\omega \sim \frac{1}{r}$,于是我们可以写出能量的积分.能量$A = C\omega^2$, 所以有
+\begin{equation}
+    \int_{r}^{2r} A 2\pi r \,\mathrm{d}r  = 2\pi \ln 2 C
+\end{equation}
+这就是频谱带的规律.更多的内容可以在hw1中找到.
 \subsection{Observation 3: }
